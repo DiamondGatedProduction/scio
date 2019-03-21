@@ -17,8 +17,7 @@
 
 package com.spotify.scio
 
-import scala.language.implicitConversions
-import com.spotify.scio.values._
+import com.spotify.scio.avro.syntax.Syntax
 
 /**
  * Main package for Avro APIs. Import all.
@@ -27,17 +26,12 @@ import com.spotify.scio.values._
  * import com.spotify.scio.avro._
  * }}}
  */
-package object avro {
+package object avro extends Syntax {
 
   /** Typed Avro annotations and converters. */
   val AvroType = com.spotify.scio.avro.types.AvroType
 
   /** Annotation for Avro field and record documentation. */
   type doc = com.spotify.scio.avro.types.doc
-
-  implicit def toAvroScioContext(c: ScioContext): AvroScioContext =
-    new AvroScioContext(c)
-  implicit def toAvroSCollection[T](c: SCollection[T]): AvroSCollection[T] =
-    new AvroSCollection[T](c)
 
 }

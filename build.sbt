@@ -21,7 +21,7 @@ import sbtassembly.AssemblyPlugin.autoImport._
 import com.typesafe.sbt.SbtGit.GitKeys.gitRemoteRepo
 import org.scalafmt.sbt.ScalafmtPlugin.scalafmtConfigSettings
 
-val beamVersion = "2.10.0"
+val beamVersion = "2.11.0"
 
 val algebirdVersion = "0.13.5"
 val annoy4sVersion = "0.8.0"
@@ -38,7 +38,7 @@ val elasticsearch2Version = "2.4.6"
 val elasticsearch5Version = "5.6.15"
 val elasticsearch6Version = "6.6.1"
 val featranVersion = "0.3.0"
-val gcsConnectorVersion = "1.6.10-hadoop2"
+val gcsConnectorVersion = "hadoop2-1.9.16"
 val gcsVersion = "1.8.0"
 val guavaVersion = "25.1-jre"
 val hadoopVersion = "2.7.7"
@@ -54,7 +54,7 @@ val kryoVersion = "4.0.2" // explicitly depend on 4.0.1+ due to https://github.c
 val parquetAvroExtraVersion = "0.2.2"
 val parquetVersion = "1.10.1"
 val protobufGenericVersion = "0.2.4"
-val protobufVersion = "3.6.1"
+val protobufVersion = "3.7.0"
 val scalacheckShapelessVersion = "1.1.8"
 val scalacheckVersion = "1.14.0"
 val scalaMacrosVersion = "2.1.1"
@@ -66,7 +66,7 @@ val sparkeyVersion = "3.0.0"
 val tensorFlowVersion = "1.13.1"
 val zoltarVersion = "0.5.1"
 val magnoliaVersion = "0.10.1-jto"
-val grpcVersion = "1.13.1"
+val grpcVersion = "1.17.1"
 val caseappVersion = "2.0.0-M6"
 
 lazy val scalafixSettings = Def.settings(
@@ -463,7 +463,7 @@ lazy val scioCassandra2: Project = Project(
     commonSettings ++ itSettings,
     description := "Scio add-on for Apache Cassandra 2.x",
     libraryDependencies ++= Seq(
-      "com.datastax.cassandra" % "cassandra-driver-core" % "3.6.0",
+      "com.datastax.cassandra" % "cassandra-driver-core" % "3.7.1",
       ("org.apache.cassandra" % "cassandra-all" % "2.2.14")
         .exclude("ch.qos.logback", "logback-classic")
         .exclude("org.slf4j", "log4j-over-slf4j"),
@@ -483,7 +483,7 @@ lazy val scioCassandra3: Project = Project(
     commonSettings ++ itSettings,
     description := "Scio add-on for Apache Cassandra 3.x",
     libraryDependencies ++= Seq(
-      "com.datastax.cassandra" % "cassandra-driver-core" % "3.6.0",
+      "com.datastax.cassandra" % "cassandra-driver-core" % "3.7.1",
       ("org.apache.cassandra" % "cassandra-all" % "3.11.4")
         .exclude("ch.qos.logback", "logback-classic")
         .exclude("org.slf4j", "log4j-over-slf4j"),
@@ -657,7 +657,7 @@ lazy val scioTensorFlow: Project = Project(
     description := "Scio add-on for TensorFlow",
     version in ProtobufConfig := protobufVersion,
     protobufRunProtoc in ProtobufConfig := (args =>
-      com.github.os72.protocjar.Protoc.runProtoc("-v3.6.0" +: args.toArray)),
+      com.github.os72.protocjar.Protoc.runProtoc("-v3.7.0" +: args.toArray)),
     sourceDirectories in Compile := (sourceDirectories in Compile).value
       .filterNot(_.getPath.endsWith("/src_managed/main")),
     managedSourceDirectories in Compile := (managedSourceDirectories in Compile).value

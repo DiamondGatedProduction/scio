@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Spotify AB.
+ * Copyright 2019 Spotify AB.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,24 @@
 
 package com.spotify.scio.tensorflow
 
-import com.spotify.scio.ScioContext
-import com.spotify.scio.io.{FileStorage, Tap}
-import com.spotify.scio.values.SCollection
+import com.spotify.scio.ContextAndArgs
+import com.spotify.scio.testing.PipelineSpec
 
-/** Tap for Tensorflow TFRecord files. */
-final case class TFRecordFileTap(path: String) extends Tap[Array[Byte]] {
-  override def value: Iterator[Array[Byte]] = FileStorage(path).tfRecordFile
-  override def open(sc: ScioContext): SCollection[Array[Byte]] =
-    sc.tfRecordFile(path)
+object SequenceExamplesJob {
+  def main(argv: Array[String]): Unit = {
+    val (sc, args) = ContextAndArgs(argv)
+    sc.parallelize(MetadataSchemaTest.sequenceExamples)
+      .saveAsTfRecordFile(args("output"))
+    sc.close()
+  }
+}
+
+class TFSequenceExampleTest extends PipelineSpec {
+
+  "SequenceExamplesJob" should "work" in {
+    JobTest[ExamplesJobV2.type]
+      .args("--output=out")
+      .output(TFExampleIO("out"))(_ should haveSize(2))
+      .run()
+  }
 }
